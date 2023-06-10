@@ -1,8 +1,10 @@
 package com.example.project.config;
 
+import com.example.project.entities.Category;
 import com.example.project.entities.User;
 import com.example.project.entities.Order;
 import com.example.project.entities.enums.OrderStatus;
+import com.example.project.repositories.CategoryRepository;
 import com.example.project.repositories.OrderRepository;
 import com.example.project.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,13 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     final private OrderRepository orderRepository;
 
-    public TestConfig(UserRepository userRepository, OrderRepository orderRepository) {
+    @Autowired
+    final private CategoryRepository categoryRepository;
+
+    public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -43,5 +49,11 @@ public class TestConfig implements CommandLineRunner {
 
         // salvando todos os pedidos
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
     }
 }
